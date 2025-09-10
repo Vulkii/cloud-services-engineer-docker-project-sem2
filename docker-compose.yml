@@ -9,10 +9,6 @@ services:
     volumes:
       - backend_data:/var/lib/momo
       - backend_logs:/var/log/app
-    secrets:
-      - some_secret
-    environment:
-      SOME_SECRET_FILE: /run/secrets/some_secret
     healthcheck:
       test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:8081/health"]
       interval: 15s
@@ -70,6 +66,3 @@ volumes:
   backend_logs:
   frontend_logs:
 
-secrets:
-  some_secret:
-    file: ./secrets/some_secret.txt
