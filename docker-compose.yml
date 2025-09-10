@@ -11,6 +11,9 @@ services:
       - "8081:8081"
     networks:
       - app-net
+    volumes:
+      - backend_data:/var/lib/momo
+      - backend_logs:/var/log/app
     healthcheck:
       test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:8081/health"]
       interval: 15s
@@ -18,6 +21,13 @@ services:
       retries: 5
       start_period: 10s
     restart: unless-stopped
+    cap_drop:
+      - ALL
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "512M"
 
   frontend:
     build:
@@ -34,6 +44,8 @@ services:
       - "80:80"
     networks:
       - app-net
+    volumes:
+      - frontend_logs:/var/log/nginx
     healthcheck:
       test: ["CMD-SHELL", "nginx -t || exit 1"]
       interval: 15s
@@ -41,7 +53,19 @@ services:
       retries: 5
       start_period: 10s
     restart: unless-stopped
+    cap_drop:
+      - ALL
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "256M"
 
 networks:
   app-net:
     driver: bridge
+
+volumes:
+  backend_data:
+  backend_logs:
+  frontend_logs:
