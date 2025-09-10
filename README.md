@@ -6,7 +6,7 @@
 
 git clone https://github.com/Vulkii/cloud-services-engineer-docker-project-sem2.git
 cd cloud-services-engineer-docker-project-sem2
-docker-compose up -d
+sudo docker-compose up -d
 
 ```
 
@@ -28,3 +28,8 @@ docker-project-backend - 24.7MB
 Backend: Используется минимально базовый образ alpine linux + образ содержит только исполняемый файл
 Frontend: Используетя минимально базовый образ alpine linux
 Установки зависимостей кэшируются, сборка триггерится только при изменении исходного кода.
+
+## Безопасность
+Используются минимальные базовые образы
+При неудачном сканировании и нахождении уязвимостей - обновляются
+Сканирование проходит в workflow - Security Scan.
