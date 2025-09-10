@@ -2,11 +2,8 @@ version: "3.9"
 
 services:
   backend:
-    build:
-      context: .
-      dockerfile: backend/Dockerfile
-    image: momo-backend:local
-    container_name: momo-backend
+    image: p1lan/docker-project-backend:latest
+    container_name: docker-project-backend
     ports:
       - "8081:8081"
     networks:
@@ -37,13 +34,8 @@ services:
           memory: "512M"
 
   frontend:
-    build:
-      context: .
-      dockerfile: frontend/Dockerfile
-      args:
-        VUE_APP_API_URL: "/api"
-    image: momo-frontend:local
-    container_name: momo-frontend
+    image: p1lan/docker-project-frontend:latest
+    container_name: docker-project-frontend
     depends_on:
       backend:
         condition: service_healthy
