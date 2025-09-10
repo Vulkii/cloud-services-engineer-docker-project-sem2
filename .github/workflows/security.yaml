@@ -1,0 +1,45 @@
+name: Security Scan
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_push_to_docker_hub:
+      name: Push Docker image to DockerHub
+      runs-on: ubuntu-latest
+      steps:
+        - name: Check out the repo
+          uses: actions/checkout@v3
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v3
+  scan-backend:
+    name: Scan Backend Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build backend image
+        run: docker build -t backend:scan -f backend/Dockerfile .
+
+      - name: Run Trivy scan on backend
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          image-ref: backend:scan
+          format: 'table'
+          exit-code: '0' 
+          severity: 'CRITICAL,HIGH'
+
+  scan-frontend:
+    name: Scan Frontend Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build frontend image
+        run: docker build -t frontend:scan -f frontend/Dockerfile .
+
+      - name: Run Trivy scan on frontend
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          image-ref: frontend:scan
+          format: 'table'
+          exit-code: '0'
+          severity: 'CRITICAL,HIGH'
