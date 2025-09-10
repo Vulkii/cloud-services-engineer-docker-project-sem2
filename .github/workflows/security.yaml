@@ -14,9 +14,9 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Build backend image
-        run: docker build -t backend:scan -f backend/Dockerfile .
+        run: docker build -t backend:scan -f backend/Dockerfile backend
       - name: Build frontend image
-        run: docker build -t frontend:scan -f frontend/Dockerfile .
+        run: docker build -t frontend:scan -f frontend/Dockerfile frontend
 
       - name: Run Trivy scan on backend
         uses: aquasecurity/trivy-action@0.20.0
