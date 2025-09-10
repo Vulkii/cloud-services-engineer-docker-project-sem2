@@ -15,8 +15,7 @@ RUN apk add --no-cache ca-certificates
 
 RUN adduser -D -g '' backenduser
 
-COPY --from=builder /app/bin/api /usr/local/bin/api
-
+COPY --from=builder /app/backend /app/backend
 USER backenduser
 
 EXPOSE 8081
