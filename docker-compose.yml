@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   backend:
     image: p1lan/docker-project-backend:latest
@@ -13,6 +11,7 @@ services:
       - backend_logs:/var/log/app
     secrets:
       - some_secret
+    profiles: ['notCI']
     environment:
       SOME_SECRET_FILE: /run/secrets/some_secret
     healthcheck:
